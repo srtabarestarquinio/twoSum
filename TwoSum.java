@@ -1,57 +1,61 @@
 import java.util.*;
 
-public class Main{
+public class TwoSum{
 	//Helper functions:
-    public int findSmallest (int [] sortedArr, int start){
+
+	//helper findSmallest function
+    public int findSmallest (int [] arr, int start){
         int smallest = start; //assume first item is smallest
-        for (int i = start+1; i<sortedArr.length; i++){
-            if (sortedArr[i] < sortedArr[smallest]){//change smallest, as necessary
+        for (int i = start+1; i<arr.length; i++){
+            if (arr[i] < arr[smallest]){//change smallest, as necessary
                 smallest = i;
             } 
         }
         return smallest;
     }
     //helper swap funtion
-    public void swap (int [] sortedArr, int i, int j){
-        int temp = sortedArr[i];
-        sortedArr[i] = sortedArr[j];
-        sortedArr[j] = temp;
-    }  	
-	public int[] sort(int []sortedArr){
+    public void swap (int [] arr, int i, int j){
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    } 
+    //sort funtion 	
+	public int[] sort(int [] arr){
 		//sort unsorted array
-        //int [] sortedArr=arr;
-        for (int i=0;i<sortedArr.length-1; i++) {
-            swap(sortedArr, i, findSmallest(sortedArr, i));
+		//go over all array
+        for (int i=0;i<arr.length-1; i++) {
+            //call findSmallest funtion and with result, call swap funtion
+            swap(arr, i, findSmallest(arr, i));
         }
-        return sortedArr;
+        return arr;
 	}
-	public int [] findTwoSum(int[] arr, int target){
-		System.out.println(Arrays.toString(arr));
-		int [] sortedArr=arr;
-		sortedArr=sort(sortedArr);
-
+	public int [] findTwoSum(int[] sortedArr, int target){
+		//Create variables for upper and lower boundaries of array
 		int low=0, high=sortedArr.length-1;
-
-		System.out.println(Arrays.toString(arr));
+		//go over while loop until the lower boundary is no longer smaller then the upper boundary, because this means that the pointers have gone over all posibilities
 		while(low<high){
+			//create variable 'sum' that will try the possibilities of the sum of two different values in the array to find the target value
 			int sum=sortedArr[low]+sortedArr[high];
+			
+			//if the sum equals the target value, then proceed to finding the indices
 			if(sum==target){
+				//create variables 'arrlow' and 'arrhigh' to get the indeces of the values that sum to the target value, start at zero and increase in the for loop until gets to wanted indeces
 				int arrlow=0, arrhigh=0;
-				for(int i=0; i<arr.length;i++){
-					if (arr[i]==sortedArr[low]){
-						System.out.println(arr[i]+"index: "+i);
+				for(int i=0; i<sortedArr.length;i++){
+					if (sortedArr[i]==sortedArr[low]){
 						arrlow=i;
 					}
-					if(arr[i]==sortedArr[high]){
-						System.out.println(arr[i]+"index:"+i);
+					if(sortedArr[i]==sortedArr[high]){
 						arrhigh=i;
 					}
 				}
 				return new int[] {arrlow, arrhigh};
 			}
+			//if sum is larger then the target value, then increase the lower boundary
 			else if(sum<target){
 				low++;
 			}
+			//if sum is smaller then the target value, then decrease the upper boundary
 			else{
 				high--;
 			}
@@ -61,7 +65,7 @@ public class Main{
 
 	//Main function: Welcome user, take user input
 	public static void main(String[] args){
-		Main twoSum = new Main();
+		TwoSum twoSum = new TwoSum();
 
 		Scanner input=new Scanner(System.in);
 		
@@ -82,26 +86,26 @@ public class Main{
 
 		input.close();
 
-		//Print given array and target value
-		System.out.println("Given nums = "+Arrays.toString(arr)+", target= "+target);
-		
-		//Sort array
-		
 
-		int [] indices = twoSum.findTwoSum(arr, target);
-    	
-    	System.out.println(Arrays.toString(arr));
-		System.out.println(Arrays.toString(indices));
-		//int [] indicesUnsorted = {Arrays.asList(arr).indexOf(indicesSorted[0]), Arrays.asList(arr).indexOf(indicesSorted[1])};
+		//sort array, called sort funtion and store return value in integer array 'sortedArray'
+		int [] sortedArr=twoSum.sort(arr);
+		//Print sorted array and target value
+		System.out.println("Given nums sorted = "+Arrays.toString(sortedArr)+", target= "+target);
 
+		//Call findTwoSum funtion that will give a size 2 int array of the indices where the values that sum up to the target value are located
+		int [] indices = twoSum.findTwoSum(sortedArr, target);
 
-		if(indices.length==2){
+		if(indices[0]!=indices[1]){
 			System.out.println("The output should be "+Arrays.toString(indices));
 			int idx1=indices[0], idx2=indices[1];
-					System.out.println("Because arr["+idx1+"] + arr["+idx2+"] = "+arr[idx1]+" + "+arr[idx2]+" ="+(arr[idx1]+arr[idx2]));
+			System.out.println("Because arr["+idx1+"] + arr["+idx2+"] = "+sortedArr[idx1]+" + "+sortedArr[idx2]+" = "+(sortedArr[idx1]+sortedArr[idx2]));
 
 		}
-		
+		//if both values are the same output -1 because numbers are not allowed to be used twice
+		else{
+			System.out.println("The output should be -1.");
+			System.out.println("Because num is not allowed to be used twice.");
+		}		
 	}
 }
 
