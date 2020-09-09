@@ -49,7 +49,12 @@ public class TwoSum{
 						arrhigh=i;
 					}
 				}
-				return new int[] {arrlow, arrhigh};
+				if(arrlow==arrhigh){
+	        		arrlow=-1;
+		          	arrhigh=-1;
+				}	
+        	return new int[] {arrlow, arrhigh};	
+        	
 			}
 			//if sum is larger then the target value, then increase the lower boundary
 			else if(sum<target){
@@ -60,7 +65,8 @@ public class TwoSum{
 				high--;
 			}
 		}
-		return new int[] {};
+		//if end of while loop means that 2 nums to sum to target value were not found in array, therefore output [-1, 0] to signal user the issue
+		return new int[] {-1, 0};
 	}
 
 	//Main function: Welcome user, take user input
@@ -95,16 +101,19 @@ public class TwoSum{
 		//Call findTwoSum funtion that will give a size 2 int array of the indices where the values that sum up to the target value are located
 		int [] indices = twoSum.findTwoSum(sortedArr, target);
 
-		if(indices[0]!=indices[1]){
+		//if both values are the same output [-1, -1] because numbers are not allowed to be used twice
+		if((indices[0]==-1 && indices[1]==-1)){
+			System.out.println("The output should be "+Arrays.toString(indices));
+			System.out.println("Because num is not allowed to be used twice.");
+		}
+		//if array does not include the numbers necessary to make up sum, output [-1, 0]
+		else if((indices[0]==-1 && indices[1]==0)){
+			System.out.println("There are not enough numbers in array to reach target sum");
+		}
+		else{
 			System.out.println("The output should be "+Arrays.toString(indices));
 			int idx1=indices[0], idx2=indices[1];
 			System.out.println("Because arr["+idx1+"] + arr["+idx2+"] = "+sortedArr[idx1]+" + "+sortedArr[idx2]+" = "+(sortedArr[idx1]+sortedArr[idx2]));
-
-		}
-		//if both values are the same output -1 because numbers are not allowed to be used twice
-		else{
-			System.out.println("The output should be -1.");
-			System.out.println("Because num is not allowed to be used twice.");
 		}		
 	}
 }
