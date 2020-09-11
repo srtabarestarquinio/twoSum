@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class TwoSum{
+public class Main{
 	//Helper functions:
 
 	//helper findSmallest function
@@ -50,8 +50,7 @@ public class TwoSum{
 					}
 				}
 				if(arrlow==arrhigh){
-	        		arrlow=-1;
-		          	arrhigh=-1;
+		  		arrlow--;
 				}	
         	return new int[] {arrlow, arrhigh};	
         	
@@ -66,12 +65,12 @@ public class TwoSum{
 			}
 		}
 		//if end of while loop means that 2 nums to sum to target value were not found in array, therefore output [-1, 0] to signal user the issue
-		return new int[] {-1, 0};
+		return new int[] {-1, -1};
 	}
 
 	//Main function: Welcome user, take user input
 	public static void main(String[] args){
-		TwoSum twoSum = new TwoSum();
+		Main twoSum = new Main();
 
 		Scanner input=new Scanner(System.in);
 		
@@ -102,12 +101,13 @@ public class TwoSum{
 		int [] indices = twoSum.findTwoSum(sortedArr, target);
 
 		//if both values are the same output [-1, -1] because numbers are not allowed to be used twice
+		// if((indices[0]==-1 && indices[1]==-1)){
+		// 	System.out.println("The output should be "+Arrays.toString(indices));
+		// 	System.out.println("Because num is not allowed to be used twice.");
+		// }
+
+		//if array does not include the numbers necessary to make up sum, output [-1, -1]
 		if((indices[0]==-1 && indices[1]==-1)){
-			System.out.println("The output should be "+Arrays.toString(indices));
-			System.out.println("Because num is not allowed to be used twice.");
-		}
-		//if array does not include the numbers necessary to make up sum, output [-1, 0]
-		else if((indices[0]==-1 && indices[1]==0)){
 			System.out.println("There are not enough numbers in array to reach target sum");
 		}
 		else{
@@ -117,4 +117,3 @@ public class TwoSum{
 		}		
 	}
 }
-
