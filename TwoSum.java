@@ -50,7 +50,7 @@ public class Main{
 					}
 				}
 				if(arrlow==arrhigh){
-		  		arrlow--;
+		  			arrlow--;
 				}	
         	return new int[] {arrlow, arrhigh};	
         	
